@@ -20,8 +20,7 @@ class HomeView(TemplateView):
         First updates the resource model, and then sets those
         resource values to the context.
         """
-        user = User.objects.get(pk=1)
-        resource = Resource.objects.get(user_id=user)
+        resource = Resource.objects.get(user_id=self.request.user)
 
         # Update resources
         now = datetime.now(timezone.utc)
