@@ -10,6 +10,11 @@ from datetime import datetime, timezone
 class HomeView(TemplateView):
     template_name = 'game/home.html'
 
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().get(self, request, *args, **kwargs)
+        return redirect('login')
+
     def get_context_data(self):
         """
         First updates the resource model, and then sets those
