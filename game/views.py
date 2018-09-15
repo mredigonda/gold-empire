@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 
@@ -37,6 +37,6 @@ class HomeView(TemplateView):
         context['rock_subunits'] = resource.rock % 1000
         context['wood_units'] = resource.wood // 1000
         context['wood_subunits'] = resource.wood % 1000
-        context['username'] = user.username
+        context['username'] = self.request.user.username
 
         return context
