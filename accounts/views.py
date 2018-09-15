@@ -5,6 +5,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+from game.models import Resource
+
 class SignUpView(FormView):
     template_name = 'accounts/signup.html'
     form_class = UserCreationForm
@@ -16,11 +18,16 @@ class SignUpView(FormView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.save() # Isn't this called implicitly by "super().form_valid(form)" below?
         username = form.cleaned_data['username']
         password = form.cleaned_data['password1']
+        form.save() # Isn't this called implicitly by "super().form_valid(form)" below?
         user = authenticate(username=username, password=password) 
         login(self.request, user)
+
+        # Create new resource associated with this user
+        new_resource = Resource.objects.create(user_id=user)
+        new_resource.save()
+        
         return super().form_valid(form)
 
 class LoginView(FormView):

@@ -10,7 +10,7 @@ class Resource(models.Model):
     rock_production = models.PositiveIntegerField(default=4)
     wood = models.PositiveIntegerField(default=0)
     wood_production = models.PositiveIntegerField(default=5)
-    last_updated = models.DateTimeField()
+    last_updated = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.user_id) + "'s resources"
