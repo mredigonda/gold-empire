@@ -10,7 +10,23 @@ from .models import Building
 
 from datetime import datetime, timezone
 
-# Create your views here.
+class Helper():
+
+    def update_resources(self, user):
+        resource = Resource.objects.get(user_id=user)
+
+        now = datetime.now(timezone.utc)
+        delta = now - resource.last_updated
+        seconds = delta.total_seconds()
+
+        resource.gold += int(resource.gold_production * seconds)
+        resource.rock += int(resource.rock_production * seconds)
+        resource.wood += int(resource.wood_production * seconds)
+        resource.last_updated = now
+        resource.save()
+
+        return resource
+
 class HomeView(TemplateView):
     template_name = 'game/home.html'
 
@@ -24,18 +40,8 @@ class HomeView(TemplateView):
         First updates the resource model, and then sets those
         resource values to the context.
         """
-        resource = Resource.objects.get(user_id=self.request.user)
-
-        # Update resources
-        now = datetime.now(timezone.utc)
-        delta = now - resource.last_updated
-        seconds = delta.total_seconds()
-
-        resource.gold += int(resource.gold_production * seconds)
-        resource.rock += int(resource.rock_production * seconds)
-        resource.wood += int(resource.wood_production * seconds)
-        resource.last_updated = now
-        resource.save()
+        helper = Helper()
+        resource = helper.update_resources(self.request.user)
 
         context = {}
 
@@ -64,7 +70,8 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
         if not self.request.user.is_authenticated:
             messages.error(self.request, 'You must log in to upgrade your buildings.')
             return redirect('login')
-        resource = Resource.objects.get(user_id=self.request.user)
+        helper = Helper()
+        resource = helper.update_resources(self.request.user)
         building = Building.objects.get(user_id=self.request.user)
         if 'gold_mine' in self.request.POST:
             building.gold_mine += 1
