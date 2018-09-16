@@ -17,13 +17,24 @@ class SignUpViewTests(TestCase):
         self.client.login(username='john', password='secret')
         response = self.client.get('/signup/')
         self.assertRedirects(response, '/')
+        self.client.logout()
 
     def test_user_account_is_created(self):
-        # response = self.client.post('/signup/', {'username': 'beth', 'password': 'secret', 'password1': 'secret'})
-        # user = User.objects.get(username='beth', password='secret')
-        # self.assertEqual(user.is_authenticated, True)
-        pass
-        
+        response = self.client.post('/signup/', {
+            'username': 'beth', 
+            'password1': 'secret123456', 
+            'password2': 'secret123456'
+        }) # Password must have at least 8 chars
+        user = auth.get_user(self.client)
+        self.assertEqual(user.is_authenticated, True)
+        resource = Resource.objects.get(user_id=user)
+        building = Building.objects.get(user_id=user)
+        self.assertEqual(building.gold_mine, 1)
+        self.assertEqual(building.rock_mine, 1)
+        self.assertEqual(building.lumber_camp, 1)
+        self.assertEqual(resource.gold, 0)
+        self.assertEqual(resource.rock, 0)
+        self.assertEqual(resource.wood, 0)
 
 class LoginViewTests(TestCase):
     
@@ -43,6 +54,7 @@ class LoginViewTests(TestCase):
         user = auth.get_user(self.client)
         self.assertEqual(user.is_authenticated, True)
         self.assertRedirects(response, '/')
+        self.client.logout()
 
 class LogoutViewTests(TestCase):
 
