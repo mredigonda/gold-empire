@@ -18,7 +18,6 @@ class SignUpView(FormView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        print("THIS RUNS")
         username = form.cleaned_data['username']
         password = form.cleaned_data['password1']
         form.save() # Isn't this called implicitly by "super().form_valid(form)" below?

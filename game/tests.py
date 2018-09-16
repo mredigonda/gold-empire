@@ -1,8 +1,9 @@
 from django.test import TestCase
 
+from django.contrib import auth
 from django.contrib.auth.models import User
-from .models import Resource
-from .models import Building
+from .models import Resource, Building
+import time
 
 class HomeViewTests(TestCase):
 
@@ -18,8 +19,12 @@ class HomeViewTests(TestCase):
 
     def test_resource_view_if_authenticated(self):
         self.client.login(username='john', password='secret')
+        user = auth.get_user(self.client)
+        time.sleep(1) # Wait for resources to generate
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'game/home.html')
+        resource = Resource.objects.get(user_id=user)
+        self.assertGreater(resource.wood, 5) # It should be at least 7 actually...
 
 class BuildingsViewTests(TestCase):
 
