@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 from game.models import Resource
+from game.models import Building
 
 class SignUpView(FormView):
     template_name = 'accounts/signup.html'
@@ -28,6 +29,10 @@ class SignUpView(FormView):
         new_resource = Resource.objects.create(user_id=user)
         new_resource.save()
         
+        # Create new buildings associated with this user
+        new_building = Building.objects.create(user_id=user)
+        new_building.save()
+
         return super().form_valid(form)
 
 class LoginView(FormView):
