@@ -1,9 +1,17 @@
 {% load static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" href="{% static 'game/style.css' %}">
-<h2>
-    {% block title %}
-    {% endblock %}
-</h2>
+<div class="header">
+    <span class="header-title">
+        {% block title %}
+        {% endblock %}
+    </span>
+    <div class="header-right">
+        <a class="{% if request.resolver_match.url_name == "home" %}active{% endif %}" href="{% url 'home' %}">Home</a>
+        <a class="{% if request.resolver_match.url_name == "buildings" %}active{% endif %}" href="{% url 'buildings' %}">Buildings</a>
+        <a href="{% url 'logout' %}">Log out?</a>
+    </div>
+</div>
 <table>
     <tr>
         <th>Gold</th>
@@ -23,6 +31,3 @@
         <p>{{ message }}</p>
     {% endfor %}
 {% endif %}
-<a href="{% url 'home' %}">Home</a>
-<a href="{% url 'buildings' %}">Buildings</a>
-<a href="{% url 'logout' %}">Log out?</a>
