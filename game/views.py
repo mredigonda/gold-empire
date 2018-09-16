@@ -5,8 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django import forms
 
-from .models import Resource
-from .models import Building
+from .models import Resource, Building
 
 from datetime import datetime, timezone
 
@@ -67,7 +66,7 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
         return redirect('login')
 
     def form_valid(self, form):
-        if not self.request.user.is_authenticated:
+        if not self.request.user.is_authenticated: # Is this 'if' statement really needed? if so, there should be more like this.
             messages.error(self.request, 'You must log in to upgrade your buildings.')
             return redirect('login')
         helper = Helper()

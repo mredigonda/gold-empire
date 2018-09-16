@@ -5,8 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from game.models import Resource
-from game.models import Building
+from game.models import Resource, Building
 
 class SignUpView(FormView):
     template_name = 'accounts/signup.html'
@@ -53,7 +52,7 @@ class LoginView(FormView):
         return redirect('home')
 
 class LogoutView(RedirectView):
-    url = '/'
+    url = '/login/'
 
     def get(self, request, *args, **kwargs):
         logout(request)
