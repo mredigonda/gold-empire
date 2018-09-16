@@ -41,3 +41,19 @@ class BuildingsViewTests(TestCase):
         user = User.objects.get(pk=1)
         building = Building.objects.get(user_id=user)
         self.assertEqual(building.gold_mine, 2)
+
+    def test_upgrade_rock_mine(self):
+        self.client.login(username='john', password='secret')
+        response = self.client.post('/buildings/', {'rock_mine': True})
+        user = User.objects.get(pk=1)
+        building = Building.objects.get(user_id=user)
+        self.assertEqual(building.rock_mine, 2)
+
+    def test_upgrade_lumber_camp(self):
+        self.client.login(username='john', password='secret')
+        response = self.client.post('/buildings/', {'lumber_camp': True})
+        response = self.client.post('/buildings/', {'lumber_camp': True})
+        response = self.client.post('/buildings/', {'lumber_camp': True})
+        user = User.objects.get(pk=1)
+        building = Building.objects.get(user_id=user)
+        self.assertEqual(building.lumber_camp, 4)
