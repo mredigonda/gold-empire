@@ -1,0 +1,8 @@
+<h2>Buildings</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="gold_mine" value="Upgrade Gold Mine" />
+    <input type="submit" name="rock mine" value="Upgrade Rock Mine" />
+    <input type="submit" name="lumber_camp" value="Upgrade Lumber Camp" />
+</form>

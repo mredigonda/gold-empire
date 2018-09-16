@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django import forms
 
 from .models import Resource
 
@@ -44,3 +47,14 @@ class HomeView(TemplateView):
         context['username'] = self.request.user.username
 
         return context
+
+class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but it must be something with support for post
+    template_name = 'game/buildings.html'
+    form_class = forms.Form
+    success_url = 'buildings/'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().get(self, request, *args, **kwargs)
+        messages.error(request, 'You must log in to see your buildings status')
+        return redirect('login')
