@@ -1,17 +1,7 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'game/style.css' %}">
-<table>
-    <tr>
-        <th>Gold</th>
-        <th>Rock</th>
-        <th>Wood</th>
-    </tr>
-    <tr>
-        <td>{{ gold_units }} - {{ gold_subunits }}</td>
-        <td>{{ rock_units }} - {{ rock_subunits }}</td>
-        <td>{{ wood_units }} - {{ wood_subunits }}</td>
-    </tr>
-</table>
+{% extends 'game/base.html' %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
 <p>Hello {{ username }}!</p>
-<a href="{% url 'logout' %}">Log out?</a>
-<a href="{% url 'buildings' %}">Buildings</a>
+{% endblock %}

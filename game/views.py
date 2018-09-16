@@ -26,6 +26,35 @@ class Helper():
 
         return resource
 
+    def get_context(self, user):
+        resource = self.update_resources(user)
+        building = Building.objects.get(user_id=user)
+
+        upgrade_gold_mine = building.get_gold_mine_upgrade_cost()
+        upgrade_rock_mine = building.get_rock_mine_upgrade_cost()
+        upgrade_lumber_camp = building.get_lumber_camp_upgrade_cost()
+
+        context = {
+            'username': user.username,
+            'gold_units': resource.gold // 1000,
+            'gold_subunits': resource.gold % 1000,
+            'rock_units': resource.rock // 1000,
+            'rock_subunits': resource.rock % 1000,
+            'wood_units': resource.wood // 1000,
+            'wood_subunits': resource.wood % 1000,
+            'upgrade_gold_mine_rock_cost': upgrade_gold_mine[0],
+            'upgrade_gold_mine_wood_cost': upgrade_gold_mine[1],
+            'upgrade_rock_mine_rock_cost': upgrade_rock_mine[0],
+            'upgrade_rock_mine_wood_cost': upgrade_rock_mine[1],
+            'upgrade_lumber_camp_rock_cost': upgrade_lumber_camp[0],
+            'upgrade_lumber_camp_wood_cost': upgrade_lumber_camp[1],
+            'gold_mine_level': building.gold_mine,
+            'rock_mine_level': building.rock_mine,
+            'lumber_camp_level': building.lumber_camp,
+        }
+
+        return context
+
 class HomeView(TemplateView):
     template_name = 'game/home.html'
 
@@ -40,19 +69,7 @@ class HomeView(TemplateView):
         resource values to the context.
         """
         helper = Helper()
-        resource = helper.update_resources(self.request.user)
-
-        context = {}
-
-        context['gold_units'] = resource.gold // 1000
-        context['gold_subunits'] = resource.gold % 1000
-        context['rock_units'] = resource.rock // 1000
-        context['rock_subunits'] = resource.rock % 1000
-        context['wood_units'] = resource.wood // 1000
-        context['wood_subunits'] = resource.wood % 1000
-        context['username'] = self.request.user.username
-
-        return context
+        return helper.get_context(self.request.user)
 
 class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but it must be something with support for post
     template_name = 'game/buildings.html'
@@ -73,14 +90,41 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
         resource = helper.update_resources(self.request.user)
         building = Building.objects.get(user_id=self.request.user)
         if 'gold_mine' in self.request.POST:
-            building.gold_mine += 1
-            resource.gold_production += 3
+            cost = building.get_gold_mine_upgrade_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.rock >= cost[0] and resource.wood >= cost[1]:
+                building.gold_mine += 1
+                resource.gold_production += 3
+                resource.rock -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to upgrade your gold mine.")
         elif 'rock_mine' in self.request.POST:
-            building.rock_mine += 1
-            resource.rock_production += 5
+            print('UPGRADING ROCK MINE')
+            cost = building.get_rock_mine_upgrade_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.rock >= cost[0] and resource.wood >= cost[1]:
+                building.rock_mine += 1
+                resource.rock_production += 5
+                resource.rock -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to upgrade your rock mine.")
         elif 'lumber_camp' in self.request.POST:
-            building.lumber_camp += 1
-            resource.wood_production += 7
+            cost = building.get_lumber_camp_upgrade_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.rock >= cost[0] and resource.wood >= cost[1]:
+                building.lumber_camp += 1
+                resource.wood_production += 7
+                resource.rock -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to upgrade your lumber camp.")
+            
         resource.save()
         building.save()
         return redirect('buildings')
+
+    def get_context_data(self):
+        helper = Helper()
+        return helper.get_context(self.request.user)

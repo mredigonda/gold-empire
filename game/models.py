@@ -23,3 +23,12 @@ class Building(models.Model):
 
     def __str__(self):
         return str(self.user_id) + "'s buildings"
+
+    def get_gold_mine_upgrade_cost(self):
+        return (self.gold_mine * 7, self.gold_mine * 11)
+
+    def get_rock_mine_upgrade_cost(self):
+        return (self.rock_mine * 5, self.rock_mine * 9)
+
+    def get_lumber_camp_upgrade_cost(self):
+        return (self.lumber_camp * 4, self.lumber_camp * 8)
