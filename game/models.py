@@ -78,7 +78,7 @@ class Unit(models.Model):
     def get_assassin_stats(self):
         return (3447, 227)
 
-    def get_samurai_cost(self):
+    def get_samurai_stats(self):
         return (9224, 1311)
 
     def get_combat_points(self):

@@ -35,26 +35,77 @@ class Helper():
         upgrade_rock_mine = building.get_rock_mine_upgrade_cost()
         upgrade_lumber_camp = building.get_lumber_camp_upgrade_cost()
 
+        explorer_cost = unit.get_explorer_cost()
+        footman_cost = unit.get_footman_cost()
+        rifleman_cost = unit.get_rifleman_cost()
+        almirant_cost = unit.get_almirant_cost()
+        assassin_cost = unit.get_assassin_cost()
+        samurai_cost = unit.get_samurai_cost()
+
+        explorer_stats = unit.get_explorer_stats()
+        footman_stats = unit.get_footman_stats()
+        rifleman_stats = unit.get_rifleman_stats()
+        almirant_stats = unit.get_almirant_stats()
+        assassin_stats = unit.get_assassin_stats()
+        samurai_stats = unit.get_samurai_stats()
+
         context = {
             'username': user.username,
+
             'gold_units': resource.gold // 1000,
             'gold_subunits': resource.gold % 1000,
             'rock_units': resource.rock // 1000,
             'rock_subunits': resource.rock % 1000,
             'wood_units': resource.wood // 1000,
             'wood_subunits': resource.wood % 1000,
+
             'upgrade_gold_mine_rock_cost': upgrade_gold_mine[0],
             'upgrade_gold_mine_wood_cost': upgrade_gold_mine[1],
             'upgrade_rock_mine_rock_cost': upgrade_rock_mine[0],
             'upgrade_rock_mine_wood_cost': upgrade_rock_mine[1],
             'upgrade_lumber_camp_rock_cost': upgrade_lumber_camp[0],
             'upgrade_lumber_camp_wood_cost': upgrade_lumber_camp[1],
+
             'gold_mine_level': building.gold_mine,
             'rock_mine_level': building.rock_mine,
             'lumber_camp_level': building.lumber_camp,
+
             'gold_mine_disabled': resource.rock < upgrade_gold_mine[0]*1000 or resource.wood < upgrade_gold_mine[1]*1000,
             'rock_mine_disabled': resource.rock < upgrade_rock_mine[0]*1000 or resource.wood < upgrade_rock_mine[1]*1000,
             'lumber_camp_disabled': resource.rock < upgrade_lumber_camp[0]*1000 or resource.wood < upgrade_lumber_camp[1]*1000,
+
+            'explorer_gold_cost': explorer_cost[0],
+            'explorer_wood_cost': explorer_cost[1],
+            'footman_gold_cost': footman_cost[0],
+            'footman_wood_cost': footman_cost[1],
+            'rifleman_gold_cost': rifleman_cost[0],
+            'rifleman_wood_cost': rifleman_cost[1],
+            'almirant_gold_cost': almirant_cost[0],
+            'almirant_wood_cost': almirant_cost[1],
+            'assassin_gold_cost': assassin_cost[0],
+            'assassin_wood_cost': assassin_cost[1],
+            'samurai_gold_cost': samurai_cost[0],
+            'samurai_wood_cost': samurai_cost[1],
+            
+            'explorer_attack': explorer_stats[0],
+            'explorer_defense': explorer_stats[1],
+            'footman_attack': footman_stats[0],
+            'footman_defense': footman_stats[1],
+            'rifleman_attack': rifleman_stats[0],
+            'rifleman_defense': rifleman_stats[1],
+            'almirant_attack': almirant_stats[0],
+            'almirant_defense': almirant_stats[1],
+            'assassin_attack': assassin_stats[0],
+            'assassin_defense': assassin_stats[1],
+            'samurai_attack': samurai_stats[0],
+            'samurai_defense': samurai_stats[1],
+
+            'explorer_disabled': resource.gold < explorer_cost[0]*1000 or resource.wood < explorer_cost[1]*1000,
+            'footman_disabled': resource.gold < footman_cost[0]*1000 or resource.wood < footman_cost[1]*1000,
+            'rifleman_disabled': resource.gold < rifleman_cost[0]*1000 or resource.wood < rifleman_cost[1]*1000,
+            'almirant_disabled': resource.gold < almirant_cost[0]*1000 or resource.wood < almirant_cost[1]*1000,
+            'assassin_disabled': resource.gold < assassin_cost[0]*1000 or resource.wood < assassin_cost[1]*1000,
+            'samurai_disabled': resource.gold < samurai_cost[0]*1000 or resource.wood < samurai_cost[1]*1000,
         }
 
         return context
