@@ -1,6 +1,51 @@
+body {
+    background-color: #ddd;
+}
+
+.buildings {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.resource-building {
+    width: 30%;
+}
+
+.resource-building-name {
+    font-size: 10px;
+    color: grey;
+}
+
+.resource-building p {
+    text-align: center; 
+}
+
+.resource-icon img {
+    display: block;
+    margin: auto;
+}
+
+/* Style the decimal parts of the resources units */
 .subunits {
     font-size: 10px;
     color: grey;
+}
+
+/* Style the main wrapper of the game */
+.wrapper {
+    width: 70%;
+    border: 1px solid #bbb;
+    padding: 5px;
+    margin: 0 auto;
+    background-color: white;
+    height: 75%;
+    border-radius: 4px;
+}
+
+.resources {
+    float: right;
 }
 
 /* Style the header with a grey background and some padding */

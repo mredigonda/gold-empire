@@ -3,20 +3,39 @@
 Buildings
 {% endblock %}
 {% block content %}
+{% load static %}
+<p>Here you can view the current status of your buildings. If you increase the level of your buildings, they will produce resources faster.</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <label>Gold Mine level {{gold_mine_level}}</label>
-    <label>Rock cost: {{ upgrade_gold_mine_rock_cost }}</label>
-    <label>Wood cost: {{ upgrade_gold_mine_wood_cost }}</label>
-    <input type="submit" name="gold_mine" value="Upgrade Gold Mine" /> <br>
-    <label>Rock Mine level {{rock_mine_level}}</label>
-    <label>Rock cost: {{ upgrade_rock_mine_rock_cost }}</label>
-    <label>Wood cost: {{ upgrade_rock_mine_wood_cost }}</label>
-    <input type="submit" name="rock_mine" value="Upgrade Rock Mine" /> <br>
-    <label>Lumber Camp level {{lumber_camp_level}}</label>
-    <label>Rock cost: {{ upgrade_lumber_camp_rock_cost }}</label>
-    <label>Wood cost: {{ upgrade_lumber_camp_wood_cost }}</label>
-    <input type="submit" name="lumber_camp" value="Upgrade Lumber Camp" /> <br>
+    <div class="buildings">
+        <div class="resource-building">
+            <div class="resource-icon"><img src="{% static 'game/gold.jpg' %}" alt="Gold Mine"></div>
+            <p class="resource-building-name">Gold Mine level {{gold_mine_level}}</p>
+            <p>
+                <img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_gold_mine_rock_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_gold_mine_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="gold_mine">Upgrade Gold Mine</button></p>
+        </div>
+        <div class="resource-building">
+            <div class="resource-icon"><img src="{% static 'game/rock.jpg' %}" alt="Rock Mine"></div>
+            <p class="resource-building-name">Rock Mine level {{rock_mine_level}}</p>
+            <p>
+                <img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_rock_mine_rock_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_rock_mine_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="rock_mine">Upgrade Rock Mine</button></p>
+        </div>
+        <div class="resource-building">
+            <div class="resource-icon"><img src="{% static 'game/wood.jpg' %}" alt="Lumber Camp"></div>
+            <p class="resource-building-name">Lumber Camp level {{lumber_camp_level}}</p>
+            <p>
+                <img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_lumber_camp_rock_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_lumber_camp_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="lumber_camp">Upgrade Lumber Camp</button></p>
+        </div>
+    </div>
 </form>
 {% endblock %}
