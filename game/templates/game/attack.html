@@ -1,0 +1,33 @@
+{% extends 'game/base.html' %}
+{% block title %}
+Attack
+{% endblock %}
+{% block content %}
+{% load static %}
+<p>Here you can view other users to attack them and steal their resources. It's a sad required duty to become the most powerful empire in the world.</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="col-container">
+        <span class="col">
+            <p><img src="{% static 'game/enemy.jpg' %}" alt="Enemy">{{ enemy_name }}</p>
+        </span>
+        <span class="col">
+            <p><img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="40" width="40">{{ enemy_gold }}</p>
+            <p><img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="40" width="40">{{ enemy_rock }}</p>
+            <p><img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="40" width="40">{{ enemy_wood }}</p>
+        </span>
+        <span class="col">
+            <p><img src="{% static 'game/explorer.jpg' %}" alt="Explorers" height="51" width="40">{{ enemy_explorer }}</p>
+            <p><img src="{% static 'game/footman.jpg' %}" alt="Footmen" height="51" width="40">{{ enemy_footman }}</p>
+            <p><img src="{% static 'game/rifleman.jpg' %}" alt="Riflemen" height="51" width="40">{{ enemy_rifleman }}</p>
+        </span>
+        <span class="col">
+            <p><img src="{% static 'game/almirant.jpg' %}" alt="Almirants" height="51" width="40">{{ enemy_almirant }}</p>
+            <p><img src="{% static 'game/assassin.jpg' %}" alt="Assassins" height="51" width="40">{{ enemy_assassin }}</p>
+            <p><img src="{% static 'game/samurai.jpg' %}" alt="Samurais" height="51" width="40">{{ enemy_samurai }}</p>
+        </span>
+        <p class="col"><button class="btn btn-primary btn-sm" name="attack">Attack</button></p>
+    </div>
+</form>
+{% endblock %}

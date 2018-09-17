@@ -106,6 +106,19 @@ class Helper():
             'almirant_disabled': resource.gold < almirant_cost[0]*1000 or resource.wood < almirant_cost[1]*1000,
             'assassin_disabled': resource.gold < assassin_cost[0]*1000 or resource.wood < assassin_cost[1]*1000,
             'samurai_disabled': resource.gold < samurai_cost[0]*1000 or resource.wood < samurai_cost[1]*1000,
+
+            'enemy_name': 'izak',
+
+            'enemy_gold': 327,
+            'enemy_rock': 213,
+            'enemy_wood': 915,
+
+            'enemy_explorer': 37,
+            'enemy_footman': 12,
+            'enemy_rifleman': 3,
+            'enemy_almirant': 1,
+            'enemy_assassin': 0,
+            'enemy_samurai': 0,
         }
 
         return context
@@ -250,6 +263,21 @@ class UnitsView(FormView):
         resource.save()
         unit.save()
         return redirect('units')
+
+    def get_context_data(self):
+        helper = Helper()
+        return helper.get_context(self.request.user)
+
+class AttackView(FormView):
+    template_name = 'game/attack.html'
+    form_class = forms.Form
+    success_url = 'attack/'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().get(self, request, *args, **kwargs)
+        messages.error(request, 'You must log in to see your attacking options.')
+        return redirect('login')
 
     def get_context_data(self):
         helper = Helper()

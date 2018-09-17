@@ -100,3 +100,11 @@ class Unit(models.Model):
         points += self.explorer * (samurai_stats[0] + samurai_stats[1]//2)
 
         return points
+
+class Attack(models.Model):
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    enemy_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='enemy_id')
+    last_updated = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.request.user)
