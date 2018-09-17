@@ -62,3 +62,41 @@ class Unit(models.Model):
 
     def get_samurai_cost(self):
         return (409, 1104)
+
+    def get_explorer_stats(self):
+        return (11, 3)
+
+    def get_footman_stats(self):
+        return (84, 43)
+
+    def get_rifleman_stats(self):
+        return (375, 64)
+
+    def get_almirant_stats(self):
+        return (1099, 575)
+
+    def get_assassin_stats(self):
+        return (3447, 227)
+
+    def get_samurai_cost(self):
+        return (9224, 1311)
+
+    def get_combat_points(self):
+        """Combat points define the probability of winning a match"""
+        points = 0
+
+        explorer_stats = self.get_explorer_stats()
+        footman_stats = self.get_footman_stats()
+        rifleman_stats = self.get_rifleman_stats()
+        almirant_stats = self.get_almirant_stats()
+        assassin_stats = self.get_assassin_stats()
+        samurai_stats = self.get_samurai_stats()
+
+        points += self.explorer * (explorer_stats[0] + explorer_stats[1]//2)
+        points += self.explorer * (footman_stats[0] + footman_stats[1]//2)
+        points += self.explorer * (rifleman_stats[0] + rifleman_stats[1]//2)
+        points += self.explorer * (almirant_stats[0] + almirant_stats[1]//2)
+        points += self.explorer * (assassin_stats[0] + assassin_stats[1]//2)
+        points += self.explorer * (samurai_stats[0] + samurai_stats[1]//2)
+
+        return points
