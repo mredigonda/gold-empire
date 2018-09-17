@@ -67,10 +67,6 @@ class HomeView(TemplateView):
         return redirect('login')
 
     def get_context_data(self):
-        """
-        First updates the resource model, and then sets those
-        resource values to the context.
-        """
         helper = Helper()
         return helper.get_context(self.request.user)
 
@@ -122,10 +118,27 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
                 resource.wood -= cost[1]
             else:
                 messages.error(self.request, "You don't have enough resources to upgrade your lumber camp.")
-            
         resource.save()
         building.save()
         return redirect('buildings')
+
+    def get_context_data(self):
+        helper = Helper()
+        return helper.get_context(self.request.user)
+
+class UnitsView(FormView):
+    template_name = 'game/units.html'
+    form_class = forms.Form
+    success_url = 'units/'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().get(self, request, *args, **kwargs)
+        messages.error(request, 'You must log in to see your units status.')
+        return redirect('login')
+
+    def form_valid(self, form):
+        pass
 
     def get_context_data(self):
         helper = Helper()

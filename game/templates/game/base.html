@@ -9,6 +9,7 @@
     <div class="header-right">
         <a class="{% if request.resolver_match.url_name == "home" %}active{% endif %}" href="{% url 'home' %}">Home</a>
         <a class="{% if request.resolver_match.url_name == "buildings" %}active{% endif %}" href="{% url 'buildings' %}">Buildings</a>
+        <a class="{% if request.resolver_match.url_name == "units" %}active{% endif %}" href="{% url 'units' %}">Units</a>
         <a href="{% url 'logout' %}">Log out?</a>
     </div>
 </div>
