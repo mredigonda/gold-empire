@@ -43,7 +43,7 @@ class Unit(models.Model):
     samurai = models.PositiveIntegerField(default=0)
     
     def __str__(self):
-        return str(self.user.id) + "'s units" 
+        return str(self.user_id) + "'s units" 
 
     def get_explorer_cost(self):
         return (1, 4)

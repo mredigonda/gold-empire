@@ -190,7 +190,31 @@ class UnitsView(FormView):
         return redirect('login')
 
     def form_valid(self, form):
-        pass
+        helper = Helper()
+        resource = helper.update_resources(self.request.user)
+        unit = Unit.objects.get(user_id=self.request.user)
+        if 'explorer' in self.request.POST:
+            cost = unit.get_explorer_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.gold >= cost[0] and resource.wood >= cost[1]:
+                unit.explorer += 1
+                resource.gold -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to create an explorer.")
+        elif 'footman' in self.request.POST:
+            print(2)
+        elif 'rifleman' in self.request.POST:
+            print(3)
+        elif 'almirant' in self.request.POST:
+            print(4)
+        elif 'assassin' in self.request.POST:
+            print(5)
+        elif 'samurai' in self.request.POST:
+            print(6)
+        resource.save()
+        unit.save()
+        return redirect('units')
 
     def get_context_data(self):
         helper = Helper()
