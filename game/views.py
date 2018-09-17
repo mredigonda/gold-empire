@@ -203,15 +203,50 @@ class UnitsView(FormView):
             else:
                 messages.error(self.request, "You don't have enough resources to create an explorer.")
         elif 'footman' in self.request.POST:
-            print(2)
+            cost = unit.get_footman_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.gold >= cost[0] and resource.wood >= cost[1]:
+                unit.footman += 1
+                resource.gold -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to create a footman.")
         elif 'rifleman' in self.request.POST:
-            print(3)
+            cost = unit.get_rifleman_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.gold >= cost[0] and resource.wood >= cost[1]:
+                unit.rifleman += 1
+                resource.gold -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to create a rifleman.")
         elif 'almirant' in self.request.POST:
-            print(4)
+            cost = unit.get_almirant_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.gold >= cost[0] and resource.wood >= cost[1]:
+                unit.almirant += 1
+                resource.gold -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to create an almirant.")
         elif 'assassin' in self.request.POST:
-            print(5)
+            cost = unit.get_assassin_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.gold >= cost[0] and resource.wood >= cost[1]:
+                unit.assassin += 1
+                resource.gold -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to create an assassin.")
         elif 'samurai' in self.request.POST:
-            print(6)
+            cost = unit.get_samurai_cost()
+            cost = (cost[0]*1000, cost[1]*1000)
+            if resource.gold >= cost[0] and resource.wood >= cost[1]:
+                unit.samurai += 1
+                resource.gold -= cost[0]
+                resource.wood -= cost[1]
+            else:
+                messages.error(self.request, "You don't have enough resources to create a samurai.")
         resource.save()
         unit.save()
         return redirect('units')
