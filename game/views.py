@@ -51,6 +51,9 @@ class Helper():
             'gold_mine_level': building.gold_mine,
             'rock_mine_level': building.rock_mine,
             'lumber_camp_level': building.lumber_camp,
+            'gold_mine_disabled': resource.rock < upgrade_gold_mine[0]*1000 or resource.wood < upgrade_gold_mine[1]*1000,
+            'rock_mine_disabled': resource.rock < upgrade_rock_mine[0]*1000 or resource.wood < upgrade_rock_mine[1]*1000,
+            'lumber_camp_disabled': resource.rock < upgrade_lumber_camp[0]*1000 or resource.wood < upgrade_lumber_camp[1]*1000,
         }
 
         return context
@@ -100,7 +103,6 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
             else:
                 messages.error(self.request, "You don't have enough resources to upgrade your gold mine.")
         elif 'rock_mine' in self.request.POST:
-            print('UPGRADING ROCK MINE')
             cost = building.get_rock_mine_upgrade_cost()
             cost = (cost[0]*1000, cost[1]*1000)
             if resource.rock >= cost[0] and resource.wood >= cost[1]:

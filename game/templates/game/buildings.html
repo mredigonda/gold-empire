@@ -10,7 +10,7 @@ Buildings
     {{ form.as_p }}
     <div class="buildings">
         <div class="resource-building">
-            <div class="resource-icon"><img src="{% static 'game/gold.jpg' %}" alt="Gold Mine"></div>
+            <div class="resource-icon {% if gold_mine_disabled %}disabled{% endif %}"><img src="{% static 'game/gold.jpg' %}" alt="Gold Mine"></div>
             <p class="resource-building-name">Gold Mine level {{gold_mine_level}}</p>
             <p>
                 <img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_gold_mine_rock_cost }}
@@ -19,7 +19,7 @@ Buildings
             <p><button class="btn btn-primary btn-sm" name="gold_mine">Upgrade Gold Mine</button></p>
         </div>
         <div class="resource-building">
-            <div class="resource-icon"><img src="{% static 'game/rock.jpg' %}" alt="Rock Mine"></div>
+            <div class="resource-icon {% if rock_mine_disabled %}disabled{% endif %}"><img src="{% static 'game/rock.jpg' %}" alt="Rock Mine"></div>
             <p class="resource-building-name">Rock Mine level {{rock_mine_level}}</p>
             <p>
                 <img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_rock_mine_rock_cost }}
@@ -28,7 +28,7 @@ Buildings
             <p><button class="btn btn-primary btn-sm" name="rock_mine">Upgrade Rock Mine</button></p>
         </div>
         <div class="resource-building">
-            <div class="resource-icon"><img src="{% static 'game/wood.jpg' %}" alt="Lumber Camp"></div>
+            <div class="resource-icon {% if lumber_camp_disabled %}disabled{% endif %}"><img src="{% static 'game/wood.jpg' %}" alt="Lumber Camp"></div>
             <p class="resource-building-name">Lumber Camp level {{lumber_camp_level}}</p>
             <p>
                 <img src="{% static 'game/rock.jpg' %}" alt="Rock Units" height="32" width="32">{{ upgrade_lumber_camp_rock_cost }}

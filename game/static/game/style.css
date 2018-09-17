@@ -48,6 +48,10 @@ body {
     float: right;
 }
 
+.disabled {
+    opacity: 0.4;
+}
+
 /* Style the header with a grey background and some padding */
 .header {
     overflow: hidden;
