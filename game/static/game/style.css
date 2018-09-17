@@ -2,18 +2,18 @@ body {
     background-color: #ddd;
 }
 
-.buildings {
+.buildings, .units {
     width: 90%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
 }
 
-.resource-building {
+.resource-building, .unit-cell {
     width: 30%;
 }
 
-.resource-building-name {
+.resource-building-name, .unit-creating-name {
     font-size: 10px;
     color: grey;
 }
@@ -22,7 +22,11 @@ body {
     text-align: center; 
 }
 
-.resource-icon img {
+.unit-cell p {
+    text-align: center;
+}
+
+.resource-icon img, .unit-icon img {
     display: block;
     margin: auto;
 }
@@ -40,7 +44,7 @@ body {
     padding: 5px;
     margin: 0 auto;
     background-color: white;
-    height: 75%;
+    min-height: 75%;
     border-radius: 4px;
 }
 

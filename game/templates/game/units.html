@@ -5,4 +5,78 @@ Units
 {% block content %}
 {% load static %}
 <p>Here you can view the current status of your units. Create more units to have a stronger empire and defeat your enemies.</p>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="units">
+        <div class="unit-cell">
+            <div class="unit-icon {% if explorer_disabled %}disabled{% endif %}">
+                <img src="{% static 'game/explorer.jpg' %}" alt="Explorer" height="180" width="140">
+            </div>
+            <p class="unit-creating-name">Explorer</p>
+            <p>
+                <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ explorer_gold_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="32" width="32">{{ explorer_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="explorer">Create Explorer</button></p>
+        </div>
+        <div class="unit-cell">
+            <div class="unit-icon {% if footman_disabled %}disabled{% endif %}">
+                <img src="{% static 'game/footman.jpg' %}" alt="Footman" height="180" width="140">
+            </div>
+            <p class="unit-creating-name">Footman</p>
+            <p>
+                <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ footman_gold_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="32" width="32">{{ footman_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="footman">Create Footman</button></p>
+        </div>
+        <div class="unit-cell">
+            <div class="unit-icon {% if rifleman_disabled %}disabled{% endif %}">
+                <img src="{% static 'game/rifleman.jpg' %}" alt="Rifleman" height="180" width="140">
+            </div>
+            <p class="unit-creating-name">Rifleman</p>
+            <p>
+                <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ rifleman_gold_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="32" width="32">{{ rifleman_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="rifleman">Create Rifleman</button></p>
+        </div>
+    </div>
+    <div class="units">
+        <div class="unit-cell">
+            <div class="unit-icon {% if almirant_disabled %}disabled{% endif %}">
+                <img src="{% static 'game/almirant.jpg' %}" alt="Almirant" height="180" width="140">
+            </div>
+            <p class="unit-creating-name">Almirant</p>
+            <p>
+                <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ almirant_gold_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="32" width="32">{{ almirant_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="almirant">Create Almirant</button></p>
+        </div>
+        <div class="unit-cell">
+            <div class="unit-icon {% if assassin_disabled %}disabled{% endif %}">
+                <img src="{% static 'game/assassin.jpg' %}" alt="Assassin" height="180" width="140">
+            </div>
+            <p class="unit-creating-name">Assassin</p>
+            <p>
+                <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ assassin_gold_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="32" width="32">{{ assassin_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="assassin">Create Assassin</button></p>
+        </div>
+        <div class="unit-cell">
+            <div class="unit-icon {% if samurai_disabled %}disabled{% endif %}">
+                <img src="{% static 'game/samurai.jpg' %}" alt="Samurai" height="180" width="140">
+            </div>
+            <p class="unit-creating-name">Samurai</p>
+            <p>
+                <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ samurai_gold_cost }}
+                <img src="{% static 'game/wood.jpg' %}" alt="Wood Units" height="32" width="32">{{ samurai_wood_cost }}
+            </p>
+            <p><button class="btn btn-primary btn-sm" name="samurai">Create Samurai</button></p>
+        </div>
+    </div>
+</form>
 {% endblock %}

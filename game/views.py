@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django import forms
 
-from .models import Resource, Building
+from .models import Resource, Building, Unit
 
 from datetime import datetime, timezone
 
@@ -29,6 +29,7 @@ class Helper():
     def get_context(self, user):
         resource = self.update_resources(user)
         building = Building.objects.get(user_id=user)
+        unit = Unit.objects.get(user_id=user)
 
         upgrade_gold_mine = building.get_gold_mine_upgrade_cost()
         upgrade_rock_mine = building.get_rock_mine_upgrade_cost()
