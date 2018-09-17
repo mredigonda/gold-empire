@@ -45,6 +45,9 @@ class Helper():
         building = Building.objects.get(user_id=user)
         unit = Unit.objects.get(user_id=user)
         attack = self.update_attack(user)
+        enemy = User.objects.get(username=attack.enemy_id)
+        enemy_resources = Resource.objects.get(user_id=enemy)
+        enemy_units = Unit.objects.get(user_id=enemy)
 
         upgrade_gold_mine = building.get_gold_mine_upgrade_cost()
         upgrade_rock_mine = building.get_rock_mine_upgrade_cost()
@@ -122,18 +125,18 @@ class Helper():
             'assassin_disabled': resource.gold < assassin_cost[0]*1000 or resource.wood < assassin_cost[1]*1000,
             'samurai_disabled': resource.gold < samurai_cost[0]*1000 or resource.wood < samurai_cost[1]*1000,
 
-            'enemy_name': 'izak',
+            'enemy_name': enemy.username,
 
-            'enemy_gold': 327,
-            'enemy_rock': 213,
-            'enemy_wood': 915,
+            'enemy_gold': enemy_resources.gold // 1000,
+            'enemy_rock': enemy_resources.rock // 1000,
+            'enemy_wood': enemy_resources.wood // 1000,
 
-            'enemy_explorer': 37,
-            'enemy_footman': 12,
-            'enemy_rifleman': 3,
-            'enemy_almirant': 1,
-            'enemy_assassin': 0,
-            'enemy_samurai': 0,
+            'enemy_explorer': enemy_units.explorer,
+            'enemy_footman': enemy_units.footman,
+            'enemy_rifleman': enemy_units.rifleman,
+            'enemy_almirant': enemy_units.almirant,
+            'enemy_assassin': enemy_units.assassin,
+            'enemy_samurai': enemy_units.samurai,
         }
 
         return context
