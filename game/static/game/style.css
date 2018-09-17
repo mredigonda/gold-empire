@@ -1,9 +1,6 @@
-table {
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
+.subunits {
+    font-size: 10px;
+    color: grey;
 }
 
 /* Style the header with a grey background and some padding */
