@@ -32,3 +32,33 @@ class Building(models.Model):
 
     def get_lumber_camp_upgrade_cost(self):
         return (self.lumber_camp * 4, self.lumber_camp * 8)
+
+class Unit(models.Model):
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    explorer = models.PositiveIntegerField(default=0)
+    footman = models.PositiveIntegerField(default=0)
+    rifleman = models.PositiveIntegerField(default=0)
+    almirant = models.PositiveIntegerField(default=0)
+    assassin = models.PositiveIntegerField(default=0)
+    samurai = models.PositiveIntegerField(default=0)
+    
+    def __str__(self):
+        return str(self.user.id) + "'s units" 
+
+    def get_explorer_cost(self):
+        return (1, 4)
+
+    def get_footman_cost(self):
+        return (7, 32)
+
+    def get_rifleman_cost(self):
+        return (28, 112)
+
+    def get_almirant_cost(self):
+        return (74, 301)
+
+    def get_assassin_cost(self):
+        return (157, 709)
+
+    def get_samurai_cost(self):
+        return (409, 1104)
