@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django import forms
 
-from .models import Resource, Building, Unit
+from .models import Resource, Building, Unit, Attack
 
 from datetime import datetime, timezone
 
@@ -26,10 +26,25 @@ class Helper():
 
         return resource
 
+    def update_attack(self, user):
+        attack = Attack.objects.get(user_id=user)
+
+        now = datetime.now(timezone.utc)
+        delta = now - attack.last_updated
+        minutes = delta.total_seconds() // 60
+
+        if minutes >= 5 or attack.enemy_id == attack.user_id:
+            attack.enemy_id = attack.generate_random_enemy()
+            attack.last_updated = now
+            attack.save()
+
+        return attack
+
     def get_context(self, user):
         resource = self.update_resources(user)
         building = Building.objects.get(user_id=user)
         unit = Unit.objects.get(user_id=user)
+        attack = self.update_attack(user)
 
         upgrade_gold_mine = building.get_gold_mine_upgrade_cost()
         upgrade_rock_mine = building.get_rock_mine_upgrade_cost()

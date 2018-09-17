@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-from game.models import Resource, Building, Unit
+from game.models import Resource, Building, Unit, Attack
 
 class SignUpView(FormView):
     template_name = 'accounts/signup.html'
@@ -34,6 +34,11 @@ class SignUpView(FormView):
 
         # Create new unit associated with this user
         new_unit = Unit.objects.create(user_id=user)
+        new_unit.save()
+
+        # Create new attack model associated with this user
+        new_attack = Attack.objects.create(user_id=user, enemy_id=user) # It's its own enemy at the start, for now.
+        new_attack.enemy_id = new_attack.generate_random_enemy()
         new_unit.save()
 
         return super().form_valid(form)

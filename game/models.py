@@ -1,3 +1,4 @@
+from random import randint
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -103,8 +104,17 @@ class Unit(models.Model):
 
 class Attack(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    enemy_id = models.OneToOneField(User, on_delete=models.CASCADE, related_name='enemy_id')
+    enemy_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enemy_id')
     last_updated = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.request.user)
+        return str(self.user_id) + "'s enemies"
+
+    def generate_random_enemy(self): # This assumes that there have been no deletions.
+        n = User.objects.all().count()
+        if n == 1:
+            return self.user_id
+        user = User.objects.get(id=int(randint(1, n)))
+        while user == self.user_id or user.is_staff: # Search new one while current is self or staff.
+            user = User.objects.get(id=int(randint(1, n)))
+        return user
