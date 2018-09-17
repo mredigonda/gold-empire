@@ -19,9 +19,17 @@
         <th>Wood</th>
     </tr>
     <tr>
-        <td>{{ gold_units }} - {{ gold_subunits }}</td>
-        <td>{{ rock_units }} - {{ rock_subunits }}</td>
-        <td>{{ wood_units }} - {{ wood_subunits }}</td>
+        <td>
+            <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">{{ gold_units }} - {{ gold_subunits }}
+        </td>
+        <td>
+            <img src="{% static 'game/rock.jpg' %}" alt="Gold Units" height="32" width="32">
+            {{ rock_units }} - {{ rock_subunits }}
+        </td>
+        <td>
+            <img src="{% static 'game/wood.jpg' %}" alt="Gold Units" height="32" width="32">
+            {{ wood_units }} - {{ wood_subunits }}
+        </td>
     </tr>
 </table>
 {% block content %}

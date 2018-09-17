@@ -1,4 +1,4 @@
-table {s
+table {
     border-collapse: collapse;
 }
 
@@ -10,7 +10,7 @@ table, th, td {
 .header {
     overflow: hidden;
     background-color: #f1f1f1;
-    padding: 20px 10px;
+    padding: 10px 5px;
 }
 
 /* Style the header links */
@@ -25,7 +25,7 @@ table, th, td {
     border-radius: 4px;
 }
 
-/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+/* Style the logo (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header span.header-title {
     font-size: 30px;
     font-weight: bold;
