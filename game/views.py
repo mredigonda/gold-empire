@@ -7,6 +7,7 @@ from django import forms
 
 from .models import Resource, Building, Unit, Attack
 
+from random import randint
 from datetime import datetime, timezone
 
 class Helper():
@@ -27,6 +28,7 @@ class Helper():
         return resource
 
     def update_attack(self, user):
+        updated = False
         attack = Attack.objects.get(user_id=user)
 
         now = datetime.now(timezone.utc)
@@ -37,14 +39,15 @@ class Helper():
             attack.enemy_id = attack.generate_random_enemy()
             attack.last_updated = now
             attack.save()
+            updated = True
 
-        return attack
+        return (attack, updated)
 
     def get_context(self, user):
         resource = self.update_resources(user)
         building = Building.objects.get(user_id=user)
         unit = Unit.objects.get(user_id=user)
-        attack = self.update_attack(user)
+        attack, _ = self.update_attack(user)
         enemy = User.objects.get(username=attack.enemy_id)
         enemy_resources = Resource.objects.get(user_id=enemy)
         enemy_units = Unit.objects.get(user_id=enemy)
@@ -300,3 +303,78 @@ class AttackView(FormView):
     def get_context_data(self):
         helper = Helper()
         return helper.get_context(self.request.user)
+
+    def form_valid(self, form):
+        helper = Helper()
+        user = self.request.user
+        attack, updated = helper.update_attack(user)
+        if updated:
+            messages.error(self.request, "The enemy to attack was updated.")
+            return redirect('attack')
+        resource = helper.update_resources(user)
+        unit = Unit.objects.get(user_id=user)
+        enemy = User.objects.get(username=attack.enemy_id)
+        enemy_resources = Resource.objects.get(user_id=enemy)
+        enemy_units = Unit.objects.get(user_id=enemy)
+
+        combat_points = unit.get_combat_points()
+        enemy_combat_points = enemy_units.get_combat_points()
+        total_points = combat_points + enemy_combat_points
+
+        if combat_points == 0:
+            messages.error(self.request, "You don't have any units in your army!.")
+            return redirect('attack')
+
+        result = randint(1, total_points)
+
+        if result <= combat_points:
+            delta_gold = int(enemy_resources.gold * 0.1)
+            delta_rock = int(enemy_resources.rock * 0.1)
+            delta_wood = int(enemy_resources.wood * 0.1)
+
+            delta_explorer = int(enemy_units.explorer * 0.1)
+            delta_footman = int(enemy_units.footman * 0.1)
+            delta_rifleman = int(enemy_units.rifleman * 0.1)
+            delta_almirant = int(enemy_units.almirant * 0.1)
+            delta_assassin = int(enemy_units.assassin * 0.1)
+            delta_samurai = int(enemy_units.samurai * 0.1)
+
+            enemy_units.explorer -= delta_explorer
+            enemy_units.footman -= delta_footman
+            enemy_units.rifleman -= delta_rifleman
+            enemy_units.almirant -= delta_almirant
+            enemy_units.assassin -= delta_assassin
+            enemy_units.samurai -= delta_samurai
+
+            enemy_resources.gold -= delta_gold
+            enemy_resources.rock -= delta_rock
+            enemy_resources.wood -= delta_wood
+            
+            resource.gold += delta_gold
+            resource.rock += delta_rock
+            resource.wood += delta_wood
+
+            messages.info(self.request, "You won the match against " + str(enemy) + ", you won 10% of his resources!")
+        else:
+            delta_explorer = int(unit.explorer * 0.1)
+            delta_footman = int(unit.footman * 0.1)
+            delta_rifleman = int(unit.rifleman * 0.1)
+            delta_almirant = int(unit.almirant * 0.1)
+            delta_assassin = int(unit.assassin * 0.1)
+            delta_samurai = int(unit.samurai * 0.1)
+
+            unit.explorer -= delta_explorer
+            unit.footman -= delta_footman
+            unit.rifleman -= delta_rifleman
+            unit.almirant -= delta_almirant
+            unit.assassin -= delta_assassin
+            unit.samurai -= delta_samurai
+
+            messages.info(self.request, "You lost the match against " + str(enemy) + ", you lost 10% of your units!")
+
+        resource.save()
+        unit.save()
+        enemy_resources.save()
+        enemy_units.save()
+
+        return redirect('attack')

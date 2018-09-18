@@ -4,7 +4,7 @@ Attack
 {% endblock %}
 {% block content %}
 {% load static %}
-<p>Here you can view other users to attack them and steal their resources. It's a sad required duty to become the most powerful empire in the world.</p>
+<p>Here you can view other users to attack them and steal their resources. It's a sad required duty to become the most powerful empire in the world. The user you can attack is changed every five minutes.</p>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
