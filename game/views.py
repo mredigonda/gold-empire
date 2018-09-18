@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django import forms
 
-from .models import Resource, Building, Unit, Attack
+from .models import Resource, Building, Unit, Attack, Notification
 
 from random import randint
 from datetime import datetime, timezone
@@ -147,6 +147,8 @@ class Helper():
             'almirant': unit.almirant,
             'assassin': unit.assassin,
             'samurai': unit.samurai,
+
+            'notifications': '',
         }
 
         return context
@@ -335,9 +337,9 @@ class AttackView(FormView):
         print(str(combat_points) + " vs " + str(enemy_combat_points))
         print("Chances of winning: " + str(combat_points / total_points))
 
-        result = randint(1, total_points)
+        result = randint(1, total_points) <= combat_points
 
-        if result <= combat_points:
+        if result:
             delta_gold = int(enemy_resources.gold * 0.1)
             delta_rock = int(enemy_resources.rock * 0.1)
             delta_wood = int(enemy_resources.wood * 0.1)
@@ -386,5 +388,11 @@ class AttackView(FormView):
         unit.save()
         enemy_resources.save()
         enemy_units.save()
+
+        new_notification = Notification.objects.create(user_id=user, enemy_id=enemy, result=result)
+        new_notification.save()
+
+        new_notification = Notification.objects.create(user_id=enemy, enemy_id=user, result=not result)
+        new_notification.save()
 
         return redirect('attack')

@@ -2,6 +2,14 @@ body {
     background-color: #ddd;
 }
 
+.won {
+    background-color: green;
+}
+
+.lost {
+    background-color: red;
+}
+
 .col-container {
     display: flex;
     width: 100%;

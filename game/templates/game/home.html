@@ -19,4 +19,9 @@ Home
         <p><img src="{% static 'game/samurai.jpg' %}" alt="Samurais" height="51" width="40">{{ samurai }}</p>
     </span>
 </div>
+{% for notification in notifications %}
+    <div class="{{notification.class}}">
+        You have {{notification.result}} a battle against {{notification.enemy}}
+    </div>
+{% endfor %}
 {% endblock %}

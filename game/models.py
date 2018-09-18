@@ -104,7 +104,7 @@ class Unit(models.Model):
 
 class Attack(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    enemy_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enemy_id')
+    enemy_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='attack_enemy_id')
     last_updated = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -118,3 +118,11 @@ class Attack(models.Model):
         while user == self.user_id or user.is_staff: # Search new one while current is self or staff.
             user = User.objects.get(id=int(randint(1, n)))
         return user
+
+class Notification(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    enemy_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_enemy_id')
+    result = models.BooleanField()
+
+    def __str__(self):
+        return str(self.user_id) + " vs " + str(self.enemy_id) + ": " + str(self.result)
