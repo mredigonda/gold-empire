@@ -70,6 +70,15 @@ class Helper():
         assassin_stats = unit.get_assassin_stats()
         samurai_stats = unit.get_samurai_stats()
 
+        notifications = []
+        notification_queryset = Notification.objects.filter(user_id=user)[:10] # Get fights fought by this user
+
+        for notification in notification_queryset:
+            notifications.append({
+                'result': 'won' if notification.result else 'lost',
+                'enemy': str(notification.enemy_id),
+            })
+
         context = {
             'username': user.username,
 
@@ -148,7 +157,7 @@ class Helper():
             'assassin': unit.assassin,
             'samurai': unit.samurai,
 
-            'notifications': '',
+            'notifications': notifications,
         }
 
         return context

@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 
 class Resource(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    gold = models.PositiveIntegerField(default=0)
+    gold = models.PositiveIntegerField(default=5000)
     gold_production = models.PositiveIntegerField(default=1)
-    rock = models.PositiveIntegerField(default=0)
+    rock = models.PositiveIntegerField(default=150000)
     rock_production = models.PositiveIntegerField(default=4)
-    wood = models.PositiveIntegerField(default=0)
+    wood = models.PositiveIntegerField(default=350000)
     wood_production = models.PositiveIntegerField(default=5)
     last_updated = models.DateTimeField(auto_now_add=True)
 
