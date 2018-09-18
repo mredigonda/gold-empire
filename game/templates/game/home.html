@@ -3,5 +3,18 @@
 Home
 {% endblock %}
 {% block content %}
-<p>Hello {{ username }}!</p>
+{% load static %}
+<p>Hello {{ username }}, here you view your notifications, as well as the status of your units.</p>
+<div class="col-container">
+    <span class="col">
+        <p><img src="{% static 'game/explorer.jpg' %}" alt="Explorers" height="51" width="40">{{ explorer }}</p>
+        <p><img src="{% static 'game/footman.jpg' %}" alt="Footmen" height="51" width="40">{{ footman }}</p>
+        <p><img src="{% static 'game/rifleman.jpg' %}" alt="Riflemen" height="51" width="40">{{ rifleman }}</p>
+    </span>
+    <span class="col">
+        <p><img src="{% static 'game/almirant.jpg' %}" alt="Almirants" height="51" width="40">{{ almirant }}</p>
+        <p><img src="{% static 'game/assassin.jpg' %}" alt="Assassins" height="51" width="40">{{ assassin }}</p>
+        <p><img src="{% static 'game/samurai.jpg' %}" alt="Samurais" height="51" width="40">{{ samurai }}</p>
+    </span>
+</div>
 {% endblock %}

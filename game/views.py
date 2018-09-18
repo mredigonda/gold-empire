@@ -140,6 +140,13 @@ class Helper():
             'enemy_almirant': enemy_units.almirant,
             'enemy_assassin': enemy_units.assassin,
             'enemy_samurai': enemy_units.samurai,
+
+            'explorer': unit.explorer,
+            'footman': unit.footman,
+            'rifleman': unit.rifleman,
+            'almirant': unit.almirant,
+            'assassin': unit.assassin,
+            'samurai': unit.samurai,
         }
 
         return context
@@ -322,8 +329,11 @@ class AttackView(FormView):
         total_points = combat_points + enemy_combat_points
 
         if combat_points == 0:
-            messages.error(self.request, "You don't have any units in your army!.")
+            messages.error(self.request, "You don't have any units in your army!")
             return redirect('attack')
+
+        print(str(combat_points) + " vs " + str(enemy_combat_points))
+        print("Chances of winning: " + str(combat_points / total_points))
 
         result = randint(1, total_points)
 

@@ -94,11 +94,11 @@ class Unit(models.Model):
         samurai_stats = self.get_samurai_stats()
 
         points += self.explorer * (explorer_stats[0] + explorer_stats[1]//2)
-        points += self.explorer * (footman_stats[0] + footman_stats[1]//2)
-        points += self.explorer * (rifleman_stats[0] + rifleman_stats[1]//2)
-        points += self.explorer * (almirant_stats[0] + almirant_stats[1]//2)
-        points += self.explorer * (assassin_stats[0] + assassin_stats[1]//2)
-        points += self.explorer * (samurai_stats[0] + samurai_stats[1]//2)
+        points += self.footman * (footman_stats[0] + footman_stats[1]//2)
+        points += self.rifleman * (rifleman_stats[0] + rifleman_stats[1]//2)
+        points += self.almirant * (almirant_stats[0] + almirant_stats[1]//2)
+        points += self.assassin * (assassin_stats[0] + assassin_stats[1]//2)
+        points += self.samurai * (samurai_stats[0] + samurai_stats[1]//2)
 
         return points
 
