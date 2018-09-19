@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Resource(models.Model):
     user_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    gold = models.PositiveIntegerField(default=5000)
+    gold = models.PositiveIntegerField(default=75000)
     gold_production = models.PositiveIntegerField(default=1)
     rock = models.PositiveIntegerField(default=150000)
     rock_production = models.PositiveIntegerField(default=4)

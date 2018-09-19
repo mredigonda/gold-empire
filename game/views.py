@@ -71,13 +71,16 @@ class Helper():
         samurai_stats = unit.get_samurai_stats()
 
         notifications = []
-        notification_queryset = Notification.objects.filter(user_id=user)[:10] # Get fights fought by this user
+        notification_queryset = Notification.objects.filter(user_id=user) # Get fights fought by this user
+        notification_queryset = reversed(notification_queryset)
 
         for notification in notification_queryset:
             notifications.append({
                 'result': 'won' if notification.result else 'lost',
-                'enemy': str(notification.enemy_id),
+                'enemy': str(notification.enemy_id)
             })
+            if len(notifications) >= 10:
+                break
 
         context = {
             'username': user.username,
