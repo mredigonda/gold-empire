@@ -2,12 +2,21 @@ body {
     background-color: #ddd;
 }
 
-.won {
-    background-color: green;
+.form {
+    margin: 0 auto;
+    width: 60%;
+    text-align: center;
 }
 
-.lost {
-    background-color: red;
+.form input {
+    width: 60%;
+    padding: 4px 2px;
+    margin: 4px;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    margin: 4px 0px;
 }
 
 .col-container {

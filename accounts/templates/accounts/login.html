@@ -7,11 +7,19 @@ Log In
 {% block resources %} 
 {% endblock %}
 {% block content %}
-<h2>Log in</h2>
-<form method="post">
+<form method="post" class="form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Log in" />
+    {% for field in form %}
+        <div class="input-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <button class="btn btn-primary submit-button">Log In</button>
+    <div class="form-errors">
+        {{ form.non_field_errors }}
+    </div>
+    <a href="{% url 'signup' %}">No account? Sign Up</a>
 </form>
-<a href="{% url 'signup' %}">Sign Up</a>
 {% endblock %}

@@ -7,11 +7,19 @@ Sign Up
 {% block resources %} 
 {% endblock %}
 {% block content %}
-<h2>Sign Up</h2>
-<form method="post">
+<form method="post" class="form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Sign up" />
+    {% for field in form %}
+        <div class="input-group">
+            {{ field.label_tag }}
+            {{ field }}
+            {{ field.errors }}
+        </div>
+    {% endfor %}
+    <button class="btn btn-primary submit-button">Sign Up</button>
+    <div class="form-errors">
+        {{ form.non_field_errors }}
+    </div>
+    <a href="{% url 'login' %}">Already a member? Log In</a>
 </form>
-<a href="{% url 'login' %}">Already a member? Log In</a>
 {% endblock %}

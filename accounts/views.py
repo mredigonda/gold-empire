@@ -6,10 +6,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 from game.models import Resource, Building, Unit, Attack
+from .forms import LoginForm, SignupForm
 
 class SignUpView(FormView):
     template_name = 'accounts/signup.html'
-    form_class = UserCreationForm
+    form_class = SignupForm
     success_url = '/'
 
     def get(self, request, *args, **kwargs):
@@ -45,7 +46,7 @@ class SignUpView(FormView):
 
 class LoginView(FormView):
     template_name = 'accounts/login.html'
-    form_class = AuthenticationForm
+    form_class = LoginForm
     success_url = '/'
 
     def get(self, request, *args, **kwargs):
