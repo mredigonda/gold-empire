@@ -49,7 +49,7 @@ class Helper():
         unit = Unit.objects.get(user_id=user)
         attack, _ = self.update_attack(user)
         enemy = User.objects.get(username=attack.enemy_id)
-        enemy_resources = Resource.objects.get(user_id=enemy)
+        enemy_resources = self.update_resources(enemy)
         enemy_units = Unit.objects.get(user_id=enemy)
 
         upgrade_gold_mine = building.get_gold_mine_upgrade_cost()
@@ -77,7 +77,8 @@ class Helper():
         for notification in notification_queryset:
             notifications.append({
                 'result': 'won' if notification.result else 'lost',
-                'enemy': str(notification.enemy_id)
+                'enemy': str(notification.enemy_id),
+                'type': 'alert-success' if notification.result else 'alert-danger'
             })
             if len(notifications) >= 10:
                 break
@@ -185,7 +186,7 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().get(self, request, *args, **kwargs)
-        messages.error(request, 'You must log in to see your buildings status.')
+        messages.error(request, 'You must log in to see your buildings status.', extra_tags='alert-danger')
         return redirect('login')
 
     def form_valid(self, form):
@@ -335,7 +336,7 @@ class AttackView(FormView):
         resource = helper.update_resources(user)
         unit = Unit.objects.get(user_id=user)
         enemy = User.objects.get(username=attack.enemy_id)
-        enemy_resources = Resource.objects.get(user_id=enemy)
+        enemy_resources = helper.update_resources(enemy)
         enemy_units = Unit.objects.get(user_id=enemy)
 
         combat_points = unit.get_combat_points()
