@@ -80,7 +80,7 @@ class Helper():
                 'enemy': str(notification.enemy_id),
                 'type': 'alert-success' if notification.result else 'alert-danger'
             })
-            if len(notifications) >= 10:
+            if len(notifications) >= 5:
                 break
 
         context = {

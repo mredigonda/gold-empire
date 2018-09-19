@@ -4,7 +4,7 @@ Home
 {% endblock %}
 {% block content %}
 {% load static %}
-<p>Hello {{ username }}, here you view your notifications, as well as the status of your units.</p>
+<p>Hello {{ username }}, here you can view the status of your units.</p>
 <div class="col-container">
     <span class="col">
         <p><img src="{% static 'game/explorer.jpg' %}" alt="Explorers" height="51" width="40">{{ explorer }}</p>
@@ -19,9 +19,14 @@ Home
         <p><img src="{% static 'game/samurai.jpg' %}" alt="Samurais" height="51" width="40">{{ samurai }}</p>
     </span>
 </div>
-{% for notification in notifications %}
-    <div class="alert {{notification.type}}">
-        You have {{notification.result}} a battle against {{notification.enemy}}.
-    </div>
-{% endfor %}
+<p>And here you can view the result of your latest battles.</p>
+{% if notifications %}
+    {% for notification in notifications %}
+        <div class="alert {{notification.type}}">
+            You have {{notification.result}} a battle against {{notification.enemy}}.
+        </div>
+    {% endfor %}
+{% else %}
+    You didn't engage in any battle yet.
+{% endif %}
 {% endblock %}
