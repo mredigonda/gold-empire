@@ -8,6 +8,7 @@ name = "pypi"
 [packages]
 django = "*"
 coverage = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.5"
