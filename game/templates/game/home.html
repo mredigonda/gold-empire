@@ -20,7 +20,7 @@ Home
     </span>
 </div>
 {% for notification in notifications %}
-    <div class="{{notification.result}}">
+    <div class="alert {{notification.type}}">
         You have {{notification.result}} a battle against {{notification.enemy}}.
     </div>
 {% endfor %}

@@ -191,7 +191,7 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
 
     def form_valid(self, form):
         if not self.request.user.is_authenticated: # Is this 'if' statement really needed? if so, there should be more like this.
-            messages.error(self.request, 'You must log in to upgrade your buildings.')
+            messages.error(request, 'You must log in to upgrade your buildings.', extra_tags='alert-danger')
             return redirect('login')
         helper = Helper()
         resource = helper.update_resources(self.request.user)
@@ -205,7 +205,7 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
                 resource.rock -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to upgrade your gold mine.")
+                messages.error(self.request, "You don't have enough resources to upgrade your gold mine.", extra_tags='alert-danger')
         elif 'rock_mine' in self.request.POST:
             cost = building.get_rock_mine_upgrade_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -215,7 +215,7 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
                 resource.rock -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to upgrade your rock mine.")
+                messages.error(self.request, "You don't have enough resources to upgrade your rock mine.", extra_tags='alert-danger')
         elif 'lumber_camp' in self.request.POST:
             cost = building.get_lumber_camp_upgrade_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -225,7 +225,7 @@ class BuildingsView(FormView): # Maybe FormView is not the most appropriate, but
                 resource.rock -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to upgrade your lumber camp.")
+                messages.error(self.request, "You don't have enough resources to upgrade your lumber camp.", extra_tags='alert-danger')
         resource.save()
         building.save()
         return redirect('buildings')
@@ -242,7 +242,7 @@ class UnitsView(FormView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().get(self, request, *args, **kwargs)
-        messages.error(request, 'You must log in to see your units status.')
+        messages.error(request, 'You must log in to see your units status.', extra_tags='alert-danger')
         return redirect('login')
 
     def form_valid(self, form):
@@ -257,7 +257,7 @@ class UnitsView(FormView):
                 resource.gold -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to create an explorer.")
+                messages.error(self.request, "You don't have enough resources to create an explorer.", extra_tags='alert-danger')
         elif 'footman' in self.request.POST:
             cost = unit.get_footman_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -266,7 +266,7 @@ class UnitsView(FormView):
                 resource.gold -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to create a footman.")
+                messages.error(self.request, "You don't have enough resources to create a footman.", extra_tags='alert-danger')
         elif 'rifleman' in self.request.POST:
             cost = unit.get_rifleman_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -275,7 +275,7 @@ class UnitsView(FormView):
                 resource.gold -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to create a rifleman.")
+                messages.error(self.request, "You don't have enough resources to create a rifleman.", extra_tags='alert-danger')
         elif 'almirant' in self.request.POST:
             cost = unit.get_almirant_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -284,7 +284,7 @@ class UnitsView(FormView):
                 resource.gold -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to create an almirant.")
+                messages.error(self.request, "You don't have enough resources to create an almirant.", extra_tags='alert-danger')
         elif 'assassin' in self.request.POST:
             cost = unit.get_assassin_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -293,7 +293,7 @@ class UnitsView(FormView):
                 resource.gold -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to create an assassin.")
+                messages.error(self.request, "You don't have enough resources to create an assassin.", extra_tags='alert-danger')
         elif 'samurai' in self.request.POST:
             cost = unit.get_samurai_cost()
             cost = (cost[0]*1000, cost[1]*1000)
@@ -302,7 +302,7 @@ class UnitsView(FormView):
                 resource.gold -= cost[0]
                 resource.wood -= cost[1]
             else:
-                messages.error(self.request, "You don't have enough resources to create a samurai.")
+                messages.error(self.request, "You don't have enough resources to create a samurai.", extra_tags='alert-danger')
         resource.save()
         unit.save()
         return redirect('units')
@@ -319,7 +319,7 @@ class AttackView(FormView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().get(self, request, *args, **kwargs)
-        messages.error(request, 'You must log in to see your attacking options.')
+        messages.error(request, 'You must log in to see your attacking options.', extra_tags='alert-dangers')
         return redirect('login')
 
     def get_context_data(self):
@@ -331,7 +331,7 @@ class AttackView(FormView):
         user = self.request.user
         attack, updated = helper.update_attack(user)
         if updated:
-            messages.error(self.request, "The enemy to attack was updated.")
+            messages.error(self.request, "The enemy to attack was updated.", extra_tags='alert-danger')
             return redirect('attack')
         resource = helper.update_resources(user)
         unit = Unit.objects.get(user_id=user)
@@ -344,7 +344,7 @@ class AttackView(FormView):
         total_points = combat_points + enemy_combat_points
 
         if combat_points == 0:
-            messages.error(self.request, "You don't have any units in your army!")
+            messages.error(self.request, "You don't have any units in your army!", extra_tags='alert-danger')
             return redirect('attack')
 
         print(str(combat_points) + " vs " + str(enemy_combat_points))
@@ -379,7 +379,7 @@ class AttackView(FormView):
             resource.rock += delta_rock
             resource.wood += delta_wood
 
-            messages.info(self.request, "You won the match against " + str(enemy) + ", you won 10% of his resources!")
+            messages.info(self.request, "You won the match against " + str(enemy) + ", you won 10% of his resources!", extra_tags='alert-success')
         else:
             delta_explorer = int(unit.explorer * 0.1)
             delta_footman = int(unit.footman * 0.1)
@@ -395,7 +395,7 @@ class AttackView(FormView):
             unit.assassin -= delta_assassin
             unit.samurai -= delta_samurai
 
-            messages.info(self.request, "You lost the match against " + str(enemy) + ", you lost 10% of your units!")
+            messages.info(self.request, "You lost the match against " + str(enemy) + ", you lost 10% of your units!", extra_tags='alert-danger')
 
         resource.save()
         unit.save()

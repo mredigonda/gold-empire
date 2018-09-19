@@ -6,29 +6,35 @@
         {% block title %}
         {% endblock %}
     </span>
-    <div class="header-right">
-        <a class="{% if request.resolver_match.url_name == "home" %}active{% endif %}" href="{% url 'home' %}">Home</a>
-        <a class="{% if request.resolver_match.url_name == "buildings" %}active{% endif %}" href="{% url 'buildings' %}">Buildings</a>
-        <a class="{% if request.resolver_match.url_name == "units" %}active{% endif %}" href="{% url 'units' %}">Units</a>
-        <a class="{% if request.resolver_match.url_name == "attack" %}active{% endif %}" href="{% url 'attack' %}">Attack</a>
-        <a href="{% url 'logout' %}">Log out?</a>
-    </div>
+    {% block menu %}
+        <div class="header-right">
+            <a class="{% if request.resolver_match.url_name == "home" %}active{% endif %}" href="{% url 'home' %}">Home</a>
+            <a class="{% if request.resolver_match.url_name == "buildings" %}active{% endif %}" href="{% url 'buildings' %}">Buildings</a>
+            <a class="{% if request.resolver_match.url_name == "units" %}active{% endif %}" href="{% url 'units' %}">Units</a>
+            <a class="{% if request.resolver_match.url_name == "attack" %}active{% endif %}" href="{% url 'attack' %}">Attack</a>
+            <a href="{% url 'logout' %}">Log out?</a>
+        </div>
+    {% endblock %}
 </div>
 <div class="wrapper">
-    <div class="resources">
-        <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">
-        {{ gold_units }}<span class="subunits">{{ gold_subunits|stringformat:"03d" }}</span>
-        <img src="{% static 'game/rock.jpg' %}" alt="Gold Units" height="32" width="32">
-        {{ rock_units }}<span class="subunits">{{ rock_subunits|stringformat:"03d" }}</span>
-        <img src="{% static 'game/wood.jpg' %}" alt="Gold Units" height="32" width="32">
-        {{ wood_units }}<span class="subunits">{{ wood_subunits|stringformat:"03d" }}</span>
-    </div>
+    {% block resources %}
+        <div class="resources">
+            <img src="{% static 'game/gold.jpg' %}" alt="Gold Units" height="32" width="32">
+            {{ gold_units }}<span class="subunits">{{ gold_subunits|stringformat:"03d" }}</span>
+            <img src="{% static 'game/rock.jpg' %}" alt="Gold Units" height="32" width="32">
+            {{ rock_units }}<span class="subunits">{{ rock_subunits|stringformat:"03d" }}</span>
+            <img src="{% static 'game/wood.jpg' %}" alt="Gold Units" height="32" width="32">
+            {{ wood_units }}<span class="subunits">{{ wood_subunits|stringformat:"03d" }}</span>
+        </div>
+    {% endblock %}
 
     {% block content %}
     {% endblock %}
     {% if messages %}
         {% for message in messages %}
-            <p>{{ message }}</p>
+            <div class="alert {{ message.extra_tags }}">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endif %}
 </div>
