@@ -9,6 +9,7 @@ name = "pypi"
 django = "*"
 coverage = "*"
 gunicorn = "*"
+whitenoise = "*"
 
 [requires]
 python_version = "3.5"
