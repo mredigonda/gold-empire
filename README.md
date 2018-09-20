@@ -3,7 +3,7 @@
 Gold Empire is a browser-based toy game project similar in various aspects to [Ogame](https://us.ogame.gameforge.com/) and [Ikariam](https://us.ikariam.gameforge.com/).
 
 You can look at a quick demo [here](https://mred-django-project.herokuapp.com/).
-- username: demouser
+- username: demo
 - password: secretkey 
 
 You could also create a new account, you don't need any email. (I know that's dangerous, but this is for educational purposes only)
