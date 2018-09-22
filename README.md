@@ -6,7 +6,8 @@ You can look at a quick demo [here](https://mred-django-project.herokuapp.com/).
 - username: demo
 - password: secretkey 
 
-You could also create a new account, you don't need any email. (I know that's dangerous, but this is for educational purposes only)
+You could also create a new account, you don't need any email. (I know that's dangerous, but this is for educational purposes only).
+The database resets every 24h, so don't expect your account to last long.
 
 In this game, there are three resources (gold, rock and wood), and you goal is to get more and more resources (by upgrading buildings that produce those resources) and to use them to create (or buy, I don't know) units that give you the power to attack other users in the game (and steal their resources).
 
